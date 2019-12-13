@@ -6,8 +6,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./redux/reducers";
 import middleware from "./redux/middleware";
-import { receiveDecks } from "./redux/actions";
-import { mockData, getDecks } from "./utils/api";
+import { receiveDecks, addDeck } from "./redux/actions";
+import * as api from "./utils/api";
 
 import { createAppContainer, } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
@@ -82,10 +82,25 @@ const AppContainer = createAppContainer(StackNavigator)
 export default class App extends React.Component {
   
   componentDidMount() {
-    getDecks().then(reuslt => store.dispatch(receiveDecks(reuslt)))
+    api.getDecks().then(reuslt => {
+      if (reuslt === null) {
+        //seeding data
+        this.seedmockData()
+      }
+      store.dispatch(receiveDecks(reuslt))
+    })
     
     setLocalNotification()
     
+  }
+
+  seedmockData = () => {
+    Object.values(api.mockData).map((d) => {
+      let key = Date.now
+      store.dispatch(addDeck(d,key))
+      api.AddDeck(d,key)
+     
+    })
   }
 
   render() {

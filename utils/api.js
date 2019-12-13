@@ -50,7 +50,7 @@ export const AddCardToDeck = (card,deckId) => {
 }
 
 export const mockData = {
-    React: {
+    "React": {
       title: 'React',
       questions: [
         {
@@ -63,7 +63,7 @@ export const mockData = {
         }
       ]
     },
-    JavaScript: {
+    'JavaScript': {
       title: 'JavaScript',
       questions: [
         {
